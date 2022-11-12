@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown 3 seconds</title>
+    <script defer>
+        let s = 3;
+        let t = setInterval(function () {
+            if (s == 0) {
+                document.getElementById('cd').textContent = 'Redirecting...';
+                clearInterval(t);
+                setTimeout(() => {
+                    window.location.href = 'destination.html';
+                }, 2000);
+            } else {
+                document.getElementById('cd').textContent = s;
+                s--;
+            }
+        }, 1000);
+    </script>
+</head>
+
+<body>
+    <div id="cd"></div>
+</body>
+
+</html>
