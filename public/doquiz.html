@@ -1,0 +1,40 @@
+<a href="https://www.facebook.com/bekhoe.bepro"><img /></a>
+
+<div id="resultContainer">
+    Your quiz result is: <span id="quizResult">99</span>
+    <div id="detailedResult">
+        <div class="questionResult">
+
+        </div>
+        <div class="questionResult"></div>
+        <div class="questionResult"></div>
+        <div class="questionResult"></div>
+    </div>
+</div>
+
+<script>
+
+    let resultDivs = "<div class='questionResult'><ol>";
+
+    resultDivs += "</ol></div>";
+
+    document.getElementById('detailedResult').innerHTML = resultDivs;
+    let data = {
+        score: 99,
+        questions: [
+            {
+                question_id: 1,
+                answers: ["a", "b", "c", "d"],
+                user_ans: "a",
+                correct_ans: "c"
+            },
+            {
+                question_id: 2,
+                answers: ["a", "b", "c", "d"],
+                user_ans: "a",
+                correct_ans: "c"
+            }
+        ]
+    }
+    res.json(data);
+</script>
