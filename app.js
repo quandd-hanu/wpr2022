@@ -1,7 +1,43 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const api = require('./modules/api');
+const sqlite = require('sqlite');
+const sqlite3 = require('sqlite3');
 app.set('view engine', 'ejs');
+app.use(express.json());
+
+async function getDBConnection() {
+    const db = await sqlite.open({
+        filename: process.env.DB_FILE,
+        driver: sqlite3.Database
+    });
+    return db;
+}
+
+app.post('/api/doquiz/:quizId', (req, res) => {
+    console.log(req.body);
+    res.send("nothing");
+});
+
+app.get('/api/quiz/:quizid/questions', async (req, res) => {
+    try {
+        let db = await getDBConnection();
+        let result = await db.all(
+            "SELECT id,question,choices FROM questions WHERE quizId = ?",
+            [req.params.quizid]
+        );
+        result.forEach(q => {
+            q.choices = JSON.parse(q.choices);
+        });
+        res.json(result);
+        await db.close();
+    } catch (err) {
+        res.status(500);
+        res.send("Server error");
+        console.log(err);
+    }
+});
 
 app.get('/api/announcements', api.announcements);
 app.get('/api/login', api.login);
@@ -11,7 +47,7 @@ app.get('/api/login', api.login);
 // });
 
 app.get('/api/joincourse/:courseID', async (req, res) => {
-    
+
     // add a record into enrolment table
     res.json({ success: true });
 })
